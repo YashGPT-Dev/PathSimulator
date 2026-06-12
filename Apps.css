@@ -5,7 +5,7 @@
   border: 1px solid rgb(175, 216, 248);
   box-sizing: border-box;
   transition: background-color 0.2s ease;
-  user-select: none; /* Prevents text selection text highlighting while dragging */
+  user-select: none;
 }
 
 /* --- Static Node States --- */
@@ -21,55 +21,53 @@
 
 .node-wall {
   background-color: rgb(12, 53, 71);
-  animation-name: wallAnimation;
-  animation-duration: 0.3s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
+  animation: wallAnimation 0.3s ease-out forwards;
 }
 
 /* --- Dynamic Algorithm States --- */
 .node-visited {
-  animation-name: visitedAnimation;
-  animation-duration: 1.5s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
+  animation: visitedAnimation 1.5s ease-out forwards;
 }
 
 .node-shortest-path {
-  animation-name: shortestPathAnimation;
-  animation-duration: 1.5s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
+  background-color: yellow !important;
+  animation: shortestPathAnimation 0.5s ease forwards;
 }
 
-/* --- Keyframe Animations --- */
+/* --- Wall Animation --- */
 @keyframes wallAnimation {
   0% {
     transform: scale(0.3);
     background-color: rgb(12, 53, 71);
     border-radius: 100%;
   }
+
   50% {
     transform: scale(1.2);
   }
+
   100% {
     transform: scale(1);
   }
 }
 
+/* --- Visited Node Animation --- */
 @keyframes visitedAnimation {
   0% {
     transform: scale(0.3);
     background-color: rgba(0, 0, 66, 0.75);
     border-radius: 100%;
   }
+
   50% {
     background-color: rgba(17, 104, 217, 0.75);
   }
+
   75% {
     transform: scale(1.2);
     background-color: rgba(0, 217, 159, 0.75);
   }
+
   100% {
     transform: scale(1);
     background-color: rgba(0, 190, 218, 0.75);
@@ -77,15 +75,18 @@
   }
 }
 
+/* --- Shortest Path Animation --- */
 @keyframes shortestPathAnimation {
   0% {
     transform: scale(0.6);
     background-color: rgb(255, 254, 106);
   }
+
   50% {
     transform: scale(1.2);
-    background-color: rgb(255, 254, 106);
+    background-color: rgb(255, 200, 0);
   }
+
   100% {
     transform: scale(1);
     background-color: rgb(255, 254, 106);

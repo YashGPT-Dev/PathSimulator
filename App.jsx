@@ -57,6 +57,8 @@ function App() {
     const newGrid = grid.map((rowItems) =>
       rowItems.map((n) => {
         if (n.row === row && n.col === col) {
+          if (n.isWall) return n;
+
           return {
             ...n,
             isWall: true,
@@ -71,6 +73,10 @@ function App() {
   };
 
   const visualizeBFS = () => {
+    document.querySelectorAll(".node").forEach((element) => {
+      element.classList.remove("node-visited");
+      element.classList.remove("node-shortest-path");
+    });
     // Reset previous visualization
     grid.forEach((row) =>
       row.forEach((node) => {
@@ -88,13 +94,36 @@ function App() {
 
     const shortestPath = getNodesInShortestPathOrder(finishNode);
 
+    if (finishNode.previousNode === null && finishNode !== startNode) {
+      alert("No Path Found");
+      return;
+    }
+
     console.log("Visited Nodes:", visitedNodesInOrder.length);
 
     console.log("Shortest Path Length:", shortestPath.length);
 
     animateVisitedNodes(visitedNodesInOrder, shortestPath);
   };
+  const visualizeAlgorithm = () => {
+    switch (currentAlgorithm) {
+      case "bfs":
+        visualizeBFS();
+        break;
 
+      case "dfs":
+        alert("DFS Coming Soon");
+        break;
+
+      case "dijkstra":
+        alert("Dijkstra Coming Soon");
+        break;
+
+      default:
+        alert("Please select an algorithm");
+        break;
+    }
+  };
   const animateVisitedNodes = (
     visitedNodesInOrder,
     nodesInShortestPathOrder,
@@ -113,11 +142,9 @@ function App() {
 
         const element = document.getElementById(`node-${node.row}-${node.col}`);
 
-        console.log(element);
-
         if (element) {
-          if (!node.isStart && !node.isFinish) {
-            element.className = "node node-visited";
+          if (!node.isStart && !node.isFinish && !node.isWall) {
+            element.classList.add("node-visited");
           }
         }
       }, 10 * i);
@@ -131,21 +158,37 @@ function App() {
 
         const element = document.getElementById(`node-${node.row}-${node.col}`);
 
-        if (element && !node.isStart && !node.isFinish && !node.isWall) {
-          element.className = "node node-shortest-path";
+        if (element) {
+          if (!node.isStart && !node.isFinish && !node.isWall) {
+            element.classList.remove("node-visited");
+            element.classList.add("node-shortest-path");
+          }
         }
       }, 50 * i);
     }
   };
 
+  //const clearGrid = () => {
+  //const newGrid = createGrid();
+
+  //setGrid(newGrid);
+  //setGrid(createGrid());
+  //document.querySelectorAll(".node").forEach((node) => {
+  //node.className = "node";
+  //});//
+  //};
   const clearGrid = () => {
     const newGrid = createGrid();
 
     setGrid(newGrid);
 
-    document.querySelectorAll(".node").forEach((node) => {
-      node.className = "node";
-    });
+    setTimeout(() => {
+      document.querySelectorAll(".node").forEach((element) => {
+        element.classList.remove("node-visited");
+        element.classList.remove("node-shortest-path");
+        element.classList.remove("node-wall");
+      });
+    }, 0);
   };
 
   return (
@@ -153,7 +196,7 @@ function App() {
       <Navbar
         currentAlgorithm={currentAlgorithm}
         setCurrentAlgorithm={setCurrentAlgorithm}
-        onVisualize={visualizeBFS}
+        onVisualize={visualizeAlgorithm}
         onClearGrid={clearGrid}
       />
 

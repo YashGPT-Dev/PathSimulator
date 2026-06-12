@@ -24,7 +24,8 @@ export function dfs(grid, startNode, finishNode) {
     const neighbors = getUnvisitedNeighbors(currentNode, grid);
     for (const neighbor of neighbors) {
       if (!neighbor.isVisited && !neighbor.isWall) {
-        neighbor.previousNode = currentNode; // Link node to backtrace path later
+        neighbor.isVisited = true;
+        neighbor.previousNode = currentNode;
         stack.push(neighbor);
       }
     }
