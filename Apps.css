@@ -1,0 +1,93 @@
+/* --- Grid and Core Layout --- */
+.node {
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgb(175, 216, 248);
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+  user-select: none; /* Prevents text selection text highlighting while dragging */
+}
+
+/* --- Static Node States --- */
+.node-start {
+  background-color: #00ff00;
+  border: 2px solid white;
+}
+
+.node-finish {
+  background-color: #ff0000;
+  border: 2px solid white;
+}
+
+.node-wall {
+  background-color: rgb(12, 53, 71);
+  animation-name: wallAnimation;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+/* --- Dynamic Algorithm States --- */
+.node-visited {
+  animation-name: visitedAnimation;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+.node-shortest-path {
+  animation-name: shortestPathAnimation;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+/* --- Keyframe Animations --- */
+@keyframes wallAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: rgb(12, 53, 71);
+    border-radius: 100%;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes visitedAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: rgba(0, 0, 66, 0.75);
+    border-radius: 100%;
+  }
+  50% {
+    background-color: rgba(17, 104, 217, 0.75);
+  }
+  75% {
+    transform: scale(1.2);
+    background-color: rgba(0, 217, 159, 0.75);
+  }
+  100% {
+    transform: scale(1);
+    background-color: rgba(0, 190, 218, 0.75);
+    border: 1px solid rgba(175, 216, 248, 0.5);
+  }
+}
+
+@keyframes shortestPathAnimation {
+  0% {
+    transform: scale(0.6);
+    background-color: rgb(255, 254, 106);
+  }
+  50% {
+    transform: scale(1.2);
+    background-color: rgb(255, 254, 106);
+  }
+  100% {
+    transform: scale(1);
+    background-color: rgb(255, 254, 106);
+  }
+}
